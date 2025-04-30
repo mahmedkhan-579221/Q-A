@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Q&A App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f9f9f9, #d4f1f4);
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+    }
+
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f2f9ff;
+      border-left: 5px solid #3498db;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #34495e;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #2980b9;
+      outline: none;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2c80b4;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+
+      .question {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🧠 Q&A App</h1>
+  <form id="quizForm">
+    <div id="questionContainer"></div>
+    <button type="submit">Submit Answers</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+const questions = [
+      // Scratch Questions (30)
+      { question: "What is the a By-default sprite in scratch?", answer: "cat" },
+      { question: "Which block is used to repeat a set of instructions?", answer: "repeat" },
+      { question: "+, -, /, *, !, % these signs we also known as", answer: "operator" },
+      { question: "Which category contains motion blocks?", answer: "motion" },
+      { question: "What block is used to control the sound in Scratch?", answer: "sound" },
+      { question: "what is the By-default category appear in scratch", answer: "motion" },
+      { question: "What type of code block is used to make decisions?", answer: "if" },
+      { question: "Which language is used to add functionality in the process of scratch Development", answer: "Javascript" },
+      { question: "Which color is used for the events category?", answer: "yellow" },
+      { question: "What block can be used to make a sprite talk?", answer: "say" },
+      { question: "What block is used to make a sprite wait?", answer: "wait" },
+      { question: "What block can be used to detect if two sprites touch?", answer: "touching" },
+      { question: "What block is used to control a sprite's appearance?", answer: "costume" },
+      { question: "What is the default size of a new Scratch project?", answer: "480" },
+      { question: "Which block can you use to make a sprite move continuously?", answer: "forever" },
+      { question: "Which language is used to create structure in the process of scratch Development", answer: "HTML" },
+      { question: "Which block is used to control the flow of a game?", answer: "broadcast" },
+      { question: "What does the 'glide' block do in Scratch?", answer: "move" },
+      { question: "What block can be used to play a sound in Scratch?", answer: "play sound" },
+      { question: "Which language is used to add styling in the process of scratch Development", answer: "css" },
+      { question: "Which color represents control blocks in Scratch?", answer: "orange" },
+      { question: "What is the default background color in Scratch?", answer: "white" },
+      { question: "what is the color of the operator category", answer: "green" },
+      { question: "What is the essential category of scratch?", answer: "Events" },
+      { question: "Which category includes the 'join' block in Scratch?", answer: "operators" },
+      { question: "what is the By-default sprite name in scratch", answer: "sprite1" },
+      { question: "Scratch is a __________ software", answer: "programming" },
+      { question: "software have _____________ types", answer: "2" },
+      { question: "whatsapp is a _____________ software", answer: "go to mouse pointer" },
+      { question: "Which block is used to stop a script?", answer: "stop all" },
+
+      // Arduino Questions (30)
+      { question: "write the modle number of the motor driver", answer: "L298N" },
+      { question: "if arduino have no code that is called", answer: "empty brain" },
+      { question: "What pin is used for the ground connection?", answer: "gnd" },
+      { question: "Which Arduino board is the most popular?", answer: "uno" },
+      { question: "Which function runs once when an Arduino is powered on?", answer: "setup" },
+      { question: "How many digital pins in Arduino", answer: "13" },
+      { question: "Arduino is a brain of our components, it is true or false", answer: "true" },
+      { question: "how many ways we have to take sorce in Arduino uno", answer: "3" },
+      { question: "What is the voltage range of an Arduino Uno?", answer: "5v" },
+      { question: "What is the default baud rate for Arduino serial communication?", answer: "9600" },
+      { question: "which part we known as the brain of the computer", answer: "CPU" },
+      { question: "Anode pin we also known as positive pin true false", answer: "True" },
+      { question: "Which library is used for controlling a servo motor?", answer: "Servo" },
+      { question: "Which function is used to delay the program in Arduino?", answer: "delay" },
+      { question: "What is the Arduino IDE used for?", answer: "programming" },
+      { question: "What is the voltage supplied to Arduino Uno boards?", answer: "5v" },
+      { question: "kethode pin we also known as negative pin true false", answer: "True" },
+      { question: "Which component is used for motor control in Arduino?", answer: "motor driver" },
+      { question: "which language we use for arduino programming", answer: "C++" },
+      { question: "we can add the advance feature in our programm with the help of", answer: "extension" },
+      { question: "DC notor need  _________ vcc", answer: "5" },
+      { question: "How many category in pictoblox on upload mode", answer: "9" },
+      { question: "What component is used to measure distance in Arduino?", answer: "ultrasonic" },
+      { question: "What is the maximum voltage that can be applied to an Arduino input pin?", answer: "5v" },
+      { question: "Pictobloxs is a __________ software", answer: "programming" },
+      { question: "During the programming, we need different library in c++ code? Yes or No", answer: "Yes" },
+      { question: "we can not create any project with using arduino uno board, Yes or No ", answer: "Yes" },
+      { question: "what is the By-default sprite name in picto-bloxs on stag mode", answer: "Tobi" },
+      { question: "have picto-bloxs sprite info pane?", answer: "Yes" },
+      { question: "have picto-bloxs backdrop info pane?", answer: "Yes" },
+      { question: "Which component is used to generate a tone in Arduino?", answer: "buzzer" },
+
+      // Math Questions (20)
+      { question: "What is the square root of 16?", answer: "4" },
+      { question: "What is 9 + 10?", answer: "19" },
+      { question: "What is 12 x 12?", answer: "144" },
+      { question: "What is 100 ÷ 5?", answer: "20" },
+      { question: "What is 15 - 7?", answer: "8" },
+      { question: "What is the area of a square with side 5?", answer: "25" },
+      { question: "What is 3 x 7?", answer: "21" },
+      { question: "What is 100 - 15?", answer: "85" },
+      { question: "What is 30 ÷ 3?", answer: "10" },
+      { question: "What is the cube of 3?", answer: "27" },
+      { question: "+, -, /, * these are the ______________ operators", answer: "mathematical" },
+      { question: "What is the next prime number after 11?", answer: "13" },
+      { question: "What is the value of pi (rounded to 2 decimal places)?", answer: "3.14" },
+      { question: "What is 8 x 8?", answer: "64" },
+      { question: "What is 100 ÷ 4?", answer: "25" },
+      { question: "What is 5 raised to the power of 2?", answer: "25" },
+      { question: "What is the sum of the angles in a triangle?", answer: "180" },
+      { question: "2+9-8*5/2+9-3*7/4+8-4*6/4+7-3*6", answer: "-14.25" },
+      { question: "What is the square of 7?", answer: "49" },
+
+      // IQ Questions (20)
+      { question: "What comes next in the series: 1, 4, 9, 16, ?", answer: "25" },
+      { question: "Which letter comes next: A, C, E, G, ?", answer: "i" },
+      { question: "How many sides does a hexagon have?", answer: "6" },
+      { question: "What is the missing number: 5, 10, 15, ?", answer: "20" },
+      { question: "Which number is the next prime number after 7?", answer: "11" },
+      { question: "What is the opposite of 'hot'?", answer: "Cold" },
+      { question: "Which shape is missing from this series: triangle, square, pentagon, ?", answer: "hexagon" },
+      { question: "What comes next: 2, 4, 8, 16, ?", answer: "32" },
+      { question: "How many months have 28 days?", answer: "12" },
+      { question: "What is the opposite of 'up'?", answer: "down" },
+      { question: "What is the missing number: 3, 6, 9, ?", answer: "12" },
+      { question: "What is the next number in the sequence: 5, 10, 20, ?", answer: "40" },
+      { question: "Which month has the fewest letters in its name?", answer: "may" },
+      { question: "What is frozen water called?", answer: "ice" },
+      { question: "How many edges does a cube have?", answer: "12" },
+      { question: "What is the capital of France?", answer: "paris" },
+      { question: "What is the capital of Pakistan?", answer: "Islamabad" },
+      { question: "What comes next in the series: 1, 1, 2, 3, 5, ?", answer: "8" },
+      { question: "Which number is the next even number after 12?", answer: "14" }
+    ];
+
+    const container = document.getElementById("questionContainer");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `
+        <label for="q${index}">Q${index + 1}: ${q.question}</label>
+        <input type="text" id="q${index}" name="q${index}" required>
+      `;
+      container.appendChild(div);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let score = 0;
+
+      questions.forEach((q, index) => {
+        const userAnswer = document.getElementById(`q${index}`).value.trim().toLowerCase();
+        if (userAnswer === q.answer.toLowerCase()) {
+          score++;
+        }
+      });
+
+      document.getElementById("result").textContent = `🎉 You scored ${score} out of ${questions.length}`;
+    });
+  </script>
+</body>
+
+</html>
