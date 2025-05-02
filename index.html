@@ -109,7 +109,7 @@
   <div id="result"></div>
 
   <script>
-const questions = [
+    const questions = [
       // Scratch Questions (30)
       { question: "What is the a By-default sprite in scratch?", answer: "cat" },
       { question: "Which block is used to repeat a set of instructions?", answer: "repeat" },
@@ -243,6 +243,14 @@ const questions = [
       });
 
       document.getElementById("result").textContent = `🎉 You scored ${score} out of ${questions.length}`;
+    });
+
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && ['U', 'S', 'C', 'A', 'I', 'J'].includes(e.key.toUpperCase())) {
+        e.preventDefault();
+      }
     });
   </script>
 </body>
